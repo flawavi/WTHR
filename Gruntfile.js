@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
     eslint: {
-      target: ['./src/*.js']
+      target: ['./src/scripts/*.js']
     },
 		pkg: grunt.file.readJSON('package.json'),
 		sass: {
