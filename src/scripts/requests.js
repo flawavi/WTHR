@@ -1,4 +1,5 @@
-function get(url) {
+let Get = function(url){
+  let tempNow
   // Return a new promise.
   return new Promise(function(resolve, reject) {
     // Do the usual XHR stuff
@@ -10,7 +11,11 @@ function get(url) {
       // so check the status
       if (xhr.status == 200) {
         // Resolve the promise with the response text
-        console.log(xhr.responseText)
+        let data = xhr.responseText,
+            jsonResponse = JSON.parse(data)
+            tempNow = jsonResponse["current_observation"]["temp_f"]
+            console.log(tempNow)
+            console.log(data)
         resolve(xhr.response);
       }
       else {
@@ -29,6 +34,7 @@ function get(url) {
     // Make the request
     xhr.send();
   });
+  return tempNow
 }
 
-// get(`http://api.wunderground.com/api/${WUKey}/conditions/q/TN/Nashville.json`)
+export {Get}
