@@ -77,7 +77,6 @@ var _requests = __webpack_require__(2);
 
 var _WUKeys = __webpack_require__(1);
 
-var tempEl = document.querySelector('.temp');
 tempEl.innerHTML = (0, _requests.Get)('http://api.wunderground.com/api/' + _WUKeys.WU_KEY + '/conditions/q/TN/Nashville.json');
 
 /***/ }),
