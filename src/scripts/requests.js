@@ -1,5 +1,4 @@
-let Get = function(url){
-  let tempNow
+let GetCurrentTemp = function(url){
   // Return a new promise.
   return new Promise(function(resolve, reject) {
     // Do the usual XHR stuff
@@ -11,17 +10,10 @@ let Get = function(url){
       // so check the status
       if (xhr.status == 200) {
         // Resolve the promise with the response text
-        let data = xhr.responseText,
-            jsonResponse = JSON.parse(data)
-            tempNow = jsonResponse["current_observation"]["temp_f"]
-            console.log(tempNow)
-            console.log(data)
         resolve(xhr.response);
-      }
-      else {
+      } else {
         // Otherwise reject with the status text
         // which will hopefully be a meaningful error
-
         reject(Error(xhr.statusText));
       }
     };
@@ -34,7 +26,7 @@ let Get = function(url){
     // Make the request
     xhr.send();
   });
-  return tempNow
+  return xhr.responseText
 }
 
-export {Get}
+export {GetCurrentTemp}
