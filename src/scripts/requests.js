@@ -1,4 +1,4 @@
-let GetCurrentTemp = function(url){
+let Get = url => {
   // Return a new promise.
   return new Promise(function(resolve, reject) {
     // Do the usual XHR stuff
@@ -29,4 +29,4 @@ let GetCurrentTemp = function(url){
   return xhr.responseText
 }
 
-export {GetCurrentTemp}
+export {Get}

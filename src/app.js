@@ -1,14 +1,29 @@
-import {GetCurrentTemp} from './scripts/requests'
-import {WU_KEY} from '../keys/WUKeys'
+import {Get} from './scripts/requests.js'
+import {URLS} from './scripts/URLs/urls.js'
 
+let tempEl = document.querySelector('.temp'),
+    forecast = document.querySelector('.forecast')
 
-let weatherData = GetCurrentTemp(`http://api.wunderground.com/api/${WU_KEY}/conditions/q/TN/Nashville.json`)
-weatherData.then(data => {
-  let jsonResponse = JSON.parse(data),
-  temp_f = jsonResponse["current_observation"]["temp_f"],
-  temp_c = jsonResponse["current_observation"]["temp_c"],
-  tempEl = document.querySelector('.temp')
+let currentWeather = Get(URLS.currentConditions)
+currentWeather.then(data => {
+  let jsonResponse = JSON.parse(data)
+
+  let temp_f = jsonResponse["current_observation"]["temp_f"],
+      temp_c = jsonResponse["current_observation"]["temp_c"]
+
   tempEl.innerHTML = `It is currently ${temp_f} degrees F, or ${temp_c} degrees C.`
   console.log(data)
 })
-weatherData.catch(error => console.error(error))
+currentWeather.catch(error => console.error(error))
+
+let currentForecast = Get(URLS.currentForecast)
+currentForecast.then(data => {
+  let parseData = JSON.parse(data)
+  console.log(parseData)
+  let lowToday = parseData['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']
+  let highToday = parseData['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']
+
+  forecast.innerHTML = `The high for Nashville today is ${highToday} degrees, and the low is ${lowToday} degrees.`
+
+})
+currentForecast.catch(error => console.error(error))
