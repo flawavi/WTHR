@@ -73,11 +73,24 @@
 "use strict";
 
 
-var _requests = __webpack_require__(2);
+var _requests = __webpack_require__(1);
 
-var _WUKeys = __webpack_require__(1);
+var _urls = __webpack_require__(2);
 
-tempEl.innerHTML = (0, _requests.Get)('http://api.wunderground.com/api/' + _WUKeys.WU_KEY + '/conditions/q/TN/Nashville.json');
+console.log(_urls.urls);
+
+var currentWeather = (0, _requests.Get)(_urls.urls.currentConditions);
+currentWeather.then(function (data) {
+  var jsonResponse = JSON.parse(data),
+      temp_f = jsonResponse["current_observation"]["temp_f"],
+      temp_c = jsonResponse["current_observation"]["temp_c"],
+      tempEl = document.querySelector('.temp');
+  tempEl.innerHTML = 'It is currently ' + temp_f + ' degrees F, or ' + temp_c + ' degrees C.';
+  console.log(data);
+});
+currentWeather.catch(function (error) {
+  return console.error(error);
+});
 
 /***/ }),
 /* 1 */
@@ -89,20 +102,7 @@ tempEl.innerHTML = (0, _requests.Get)('http://api.wunderground.com/api/' + _WUKe
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var WU_KEY = exports.WU_KEY = 'be23521fe4b9e9ae';
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 var Get = function Get(url) {
-  var tempNow = void 0;
   // Return a new promise.
   return new Promise(function (resolve, reject) {
     // Do the usual XHR stuff
@@ -114,16 +114,10 @@ var Get = function Get(url) {
       // so check the status
       if (xhr.status == 200) {
         // Resolve the promise with the response text
-        var data = xhr.responseText,
-            jsonResponse = JSON.parse(data);
-        tempNow = jsonResponse["current_observation"]["temp_f"];
-        console.log(tempNow);
-        console.log(data);
         resolve(xhr.response);
       } else {
         // Otherwise reject with the status text
         // which will hopefully be a meaningful error
-
         reject(Error(xhr.statusText));
       }
     };
@@ -136,10 +130,58 @@ var Get = function Get(url) {
     // Make the request
     xhr.send();
   });
-  return tempNow;
+  return xhr.responseText;
 };
 
+var GetCurrentForecast = function GetCurrentForecast(url) {
+  return new Promise(function (resolve, reject) {
+    // Do the usual XHR stuff
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+
+    xhr.onload = function () {
+      // This is called even on 404 etc
+      // so check the status
+      if (xhr.status == 200) {
+        // Resolve the promise with the response text
+        resolve(xhr.response);
+      } else {
+        // Otherwise reject with the status text
+        // which will hopefully be a meaningful error
+        reject(Error(xhr.statusText));
+      }
+    };
+
+    // Handle network errors
+    xhr.onerror = function () {
+      reject(Error("Network Error"));
+    };
+
+    // Make the request
+    xhr.send();
+  });
+  return xhr.responseText;
+};
 exports.Get = Get;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.urls = undefined;
+
+var _WUKeys = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../keys/WUKeys\""); e.code = 'MODULE_NOT_FOUND';; throw e; }()));
+
+var urls = exports.urls = {
+  currentConditions: 'http://api.wunderground.com/api/' + _WUKeys.WU_KEY + '/conditions/q/TN/Nashville.json',
+  currentForecast: 'http://api.wunderground.com/api/' + _WUKeys.WU_KEY + '/forecast10day/q/TN/Nashville.json'
+};
 
 /***/ }),
 /* 3 */
