@@ -1,29 +1,34 @@
-import {Get} from './scripts/requests.js'
-import {URLS} from './scripts/URLs/urls.js'
+import {CURRENT_WEATHER, CURRENT_FORECAST, WEB_CAMS} from '../src/factory.js'
 
 let tempEl = document.querySelector('.temp'),
-    forecast = document.querySelector('.forecast')
+    forecastEl = document.querySelector('.forecast'),
+    webCamEl = document.querySelector('.webcam')
 
-let currentWeather = Get(URLS.currentConditions)
-currentWeather.then(data => {
-  let jsonResponse = JSON.parse(data)
+CURRENT_WEATHER.then(data => {
+  let weather = JSON.parse(data),
+      temp_f = weather["current_observation"]["temp_f"],
+      temp_c = weather["current_observation"]["temp_c"]
+  console.log(weather)
 
-  let temp_f = jsonResponse["current_observation"]["temp_f"],
-      temp_c = jsonResponse["current_observation"]["temp_c"]
+  tempEl.innerHTML = `It is currently ${temp_f} degrees.`
+}).catch(error => console.error(error))
 
-  tempEl.innerHTML = `It is currently ${temp_f} degrees F, or ${temp_c} degrees C.`
-  console.log(data)
+CURRENT_FORECAST.then(data => {
+  let nashForecast = JSON.parse(data),
+      dayOfWeek = nashForecast['forecast']['simpleforecast']['forecastday'][0]['date']['weekday'],
+      lowToday = nashForecast['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'],
+      highToday = nashForecast['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'],
+      tmrwHigh = nashForecast['forecast']['simpleforecast']['forecastday'][1]['high']['fahrenheit'],
+      tmrwLow = nashForecast['forecast']['simpleforecast']['forecastday'][1]['low']['fahrenheit'],
+      chanceRainUrl = nashForecast['forecast']['simpleforecast']['forecastday'][0]['icon_url']
+  console.log(nashForecast)
+
+  forecastEl.innerHTML = `The high for Nashville today - ${dayOfWeek} - is ${highToday} degrees, and the low is ${lowToday} degrees. Tomorrow's high will be ${tmrwHigh}, and the low will be ${tmrwLow}`
+
+}).catch(error => console.error(error))
+
+WEB_CAMS.then(data => {
+  let webCamData = JSON.parse(data)
+  console.log(webCamData)
+  webCamEl.innerHTML = `<iframe class="iframe-webcam col-md-12" src="http://www.wunderground.com/webcams/tndot1/354/show.html" alt="webcame data"></iframe>`
 })
-currentWeather.catch(error => console.error(error))
-
-let currentForecast = Get(URLS.currentForecast)
-currentForecast.then(data => {
-  let parseData = JSON.parse(data)
-  console.log(parseData)
-  let lowToday = parseData['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']
-  let highToday = parseData['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']
-
-  forecast.innerHTML = `The high for Nashville today is ${highToday} degrees, and the low is ${lowToday} degrees.`
-
-})
-currentForecast.catch(error => console.error(error))
