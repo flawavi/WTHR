@@ -1,8 +1,6 @@
 import {CURRENT_WEATHER, CURRENT_FORECAST, WEB_CAMS} from '../src/factory.js'
-
-let tempEl = document.querySelector('.temp'),
-    forecastEl = document.querySelector('.forecast'),
-    webCamEl = document.querySelector('.webcam')
+import {tempEl, forecastEl, webCamEl} from '../src/scripts/selectors.js'
+import {buildNode} from '../src/functions.js'
 
 CURRENT_WEATHER.then(data => {
   let weather = JSON.parse(data),
@@ -30,5 +28,9 @@ CURRENT_FORECAST.then(data => {
 WEB_CAMS.then(data => {
   let webCamData = JSON.parse(data)
   console.log(webCamData)
-  webCamEl.innerHTML = `<iframe class="iframe-webcam col-md-12" src="http://www.wunderground.com/webcams/tndot1/354/show.html" alt="webcame data"></iframe>`
+  let iFrameUrl = webCamData.webcams['29'].CAMURL
+  webCamEl.innerHTML = `<iframe class="iframe-webcam col-md-12" src="${iFrameUrl}" alt="webcam"></iframe>`
 })
+
+
+buildNode('div', 'testing', 'temp')
