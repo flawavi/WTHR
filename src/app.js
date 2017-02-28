@@ -2,6 +2,7 @@
 
 import * as WUND from './functions.js'
 import {buildNode} from './dom-builders.js'
+import {weatherChart} from './charts.js'
 // WUND.weatherNow()
 // WUND.twoDayForecast()
 // WUND.trinityLaneCam()
