@@ -1,13 +1,7 @@
 import {CURRENT_WEATHER, CURRENT_FORECAST, WEB_CAMS} from '../src/factory.js'
 import {tempEl, forecastEl, webCamEl} from '../src/scripts/selectors.js'
 
-function buildNode(element, text, id){
-    const NEW_EL = document.createElement(element)
-    const INNER_TEXT = document.createTextNode(text)
-    const ELEM_ID = document.getElementById(id)
-    NEW_EL.appendChild(INNER_TEXT)
-    ELEM_ID.parentNode.insertBefore(NEW_EL, ELEM_ID)
-}
+
 
 function weatherNow(){
   CURRENT_WEATHER.then(data => {
@@ -20,7 +14,7 @@ function weatherNow(){
   }).catch(error => console.error(error))
 }
 
-function forecastNow(){
+function twoDayForecast(){
   CURRENT_FORECAST.then(data => {
     let nashForecast = JSON.parse(data),
     dayOfWeek = nashForecast['forecast']['simpleforecast']['forecastday'][0]['date']['weekday'],
@@ -36,6 +30,28 @@ function forecastNow(){
   }).catch(error => console.error(error))
 }
 
+function tenDayHighs(){
+  let highs = []
+  CURRENT_FORECAST.then(weather => {
+    let weatherData = JSON.parse(weather)
+    for(let i = 0; i < 10; i++){
+      highs.push(weatherData['forecast']['simpleforecast']['forecastday'][i]['high']['fahrenheit'])
+    }
+  }).catch(error => console.error(error))
+  return highs
+}
+
+function tenDayLows(){
+  let lows = []
+  CURRENT_FORECAST.then(weather => {
+    let weatherData = JSON.parse(weather)
+    for(let i = 0; i < 10; i++){
+      lows.push(weatherData['forecast']['simpleforecast']['forecastday'][i]['low']['fahrenheit'])
+    }
+  }).catch(error => console.error(error))
+  return lows
+}
+
 function trinityLaneCam(){
   WEB_CAMS.then(data => {
     let webCamData = JSON.parse(data)
@@ -43,7 +59,6 @@ function trinityLaneCam(){
     let iFrameUrl = webCamData.webcams['29'].CAMURL
     webCamEl.innerHTML = `<iframe class="iframe-webcam col-md-12" src="${iFrameUrl}" alt="webcam"></iframe>`
   })
-
 }
 
-export {buildNode, weatherNow, forecastNow, trinityLaneCam}
+export {weatherNow, twoDayForecast, trinityLaneCam, tenDayHighs, tenDayLows}
