@@ -1,4 +1,6 @@
-import {URLS} from './URLs/urls.js'
+'use strict'
+
+import {URLS} from './urls.js'
 import {Get} from './requests.js'
 
 

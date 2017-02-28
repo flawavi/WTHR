@@ -1,3 +1,5 @@
+'use strict'
+
 import * as WUND from './functions.js'
 import {buildNode} from './dom-builders.js'
 // WUND.weatherNow()

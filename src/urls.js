@@ -1,3 +1,5 @@
+'use strict'
+
 import {WU_KEY} from '../../keys/WUKeys.js'
 
 export const URLS = {

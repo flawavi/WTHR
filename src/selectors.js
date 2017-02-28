@@ -1,5 +1,7 @@
-const tempEl = document.querySelector('.temp')
-const forecastEl = document.querySelector('.forecast')
-const webCamEl = document.querySelector('.webcam')
+'use strict'
 
-export {tempEl, forecastEl, webCamEl}
+export const SELECTORS = {
+  tempEl: document.querySelector('.temp'),
+  forecastEl: document.querySelector('.forecast'),
+  webCamEl: document.querySelector('.webcam')
+}

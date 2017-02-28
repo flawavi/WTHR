@@ -1,5 +1,7 @@
+'use strict'
+
 import {CURRENT_WEATHER, CURRENT_FORECAST, WEB_CAMS} from './factory.js'
-import {tempEl, forecastEl, webCamEl} from './selectors.js'
+import {SELECTORS} from './selectors.js'
 
 
 
@@ -10,7 +12,7 @@ function weatherNow(){
         temp_c = weather["current_observation"]["temp_c"]
     console.log(weather)
 
-    tempEl.innerHTML = `It is currently ${temp_f} degrees.`
+    SELECTORS.tempEl.innerHTML = `It is currently ${temp_f} degrees.`
   }).catch(error => console.error(error))
 }
 
@@ -25,7 +27,7 @@ function twoDayForecast(){
     chanceRainUrl = nashForecast['forecast']['simpleforecast']['forecastday'][0]['icon_url']
     console.log(nashForecast)
 
-    forecastEl.innerHTML = `The high for Nashville today - ${dayOfWeek} - is ${highToday} degrees, and the low is ${lowToday} degrees. Tomorrow's high will be ${tmrwHigh}, and the low will be ${tmrwLow}`
+    SELECTORS.forecastEl.innerHTML = `The high for Nashville today - ${dayOfWeek} - is ${highToday} degrees, and the low is ${lowToday} degrees. Tomorrow's high will be ${tmrwHigh}, and the low will be ${tmrwLow}`
 
   }).catch(error => console.error(error))
 }
@@ -57,7 +59,7 @@ function trinityLaneCam(){
     let webCamData = JSON.parse(data)
     console.log(webCamData)
     let iFrameUrl = webCamData.webcams['29'].CAMURL
-    webCamEl.innerHTML = `<iframe class="iframe-webcam col-md-12" src="${iFrameUrl}" alt="webcam"></iframe>`
+    SELECTORS.webCamEl.innerHTML = `<iframe class="iframe-webcam col-md-12" src="${iFrameUrl}" alt="webcam"></iframe>`
   })
 }
 
