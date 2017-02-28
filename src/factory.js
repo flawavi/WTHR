@@ -1,5 +1,5 @@
-import {URLS} from './scripts/URLs/urls.js'
-import {Get} from './scripts/requests.js'
+import {URLS} from './URLs/urls.js'
+import {Get} from './requests.js'
 
 
 const CURRENT_WEATHER = Get(URLS.currentConditions)

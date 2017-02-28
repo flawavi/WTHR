@@ -1,5 +1,5 @@
-import {CURRENT_WEATHER, CURRENT_FORECAST, WEB_CAMS} from '../src/factory.js'
-import {tempEl, forecastEl, webCamEl} from '../src/scripts/selectors.js'
+import {CURRENT_WEATHER, CURRENT_FORECAST, WEB_CAMS} from './factory.js'
+import {tempEl, forecastEl, webCamEl} from './selectors.js'
 
 
 
