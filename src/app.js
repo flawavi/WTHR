@@ -1,7 +1,13 @@
-import {buildNode, weatherNow, forecastNow, trinityLaneCam} from '../src/functions.js'
+'use strict'
 
-weatherNow()
-forecastNow()
-trinityLaneCam()
+import * as WUND from './functions.js'
+import {buildNode} from './dom-builders.js'
+// WUND.weatherNow()
+// WUND.twoDayForecast()
+// WUND.trinityLaneCam()
+let highs = WUND.tenDayHighs()
+let lows = WUND.tenDayLows()
 
-buildNode('div', 'testing', 'HERE\'S TODAY\'S FORECAST!')
+console.log(highs, "TEN_DAY_HIGHS", lows, "TEN_DAY_LOWS")
+
+buildNode('div', 'Here\'s today\'s forecast!', 'temp')

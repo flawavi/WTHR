@@ -1,3 +1,5 @@
+'use strict'
+
 let Get = url => {
   // Return a new promise.
   return new Promise(function(resolve, reject) {
