@@ -1,6 +1,6 @@
 'use strict'
 
-import {WU_KEY} from '../../keys/WUKeys.js'
+import {WU_KEY} from '../keys/WUKeys.js'
 
 export const URLS = {
   currentConditions: `http://api.wunderground.com/api/${WU_KEY}/conditions/q/TN/Nashville.json`,
