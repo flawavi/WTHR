@@ -5,12 +5,12 @@ import {SELECTORS} from './selectors.js'
 
 let element = SELECTORS.chart
 console.log(element)
-let weatherChart = new Chart(SELECTORS.chart, {
+let temperatures = new Chart(SELECTORS.chart, {
     type: 'bar',
     data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
-            label: '# of Votes',
+            label: 'temperature',
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -42,4 +42,4 @@ let weatherChart = new Chart(SELECTORS.chart, {
     }
 });
 
-module.exports = {weatherChart}
+module.exports = {temperatures}
